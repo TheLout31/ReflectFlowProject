@@ -1,0 +1,442 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #14101c;
+  color: #cfc9e6;
+  display: flex;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* dashborad styles */
+.top-bar {
+  height: 60px;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+}
+
+.logout-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #d32f2f;
+}
+.recent-journal-list,
+.recent-tasks-list {
+  height: 50%;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #2e2842;
+  border-radius: 8px;
+  color: #ddd;
+  font-size: 14px;
+  font-weight: bold;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.recent-tasks-list .task-preview {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 4px;
+  padding: 5px;
+}
+.recent-journal-list .journal-preview {
+  display: flex;
+  text-align: left;
+  align-items: center;
+  background-color: #8d6fe7;
+  border-radius: 16px;
+  padding: 8px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 4px;
+}
+.task-status {
+  font-weight: bold;
+  color: #4caf50;
+}
+.task-status.done {
+  color: #4caf50;
+}
+.task-status.pending {
+  color: #f08119;
+}
+
+/* authorization */
+
+.sidebar {
+  width: 220px;
+  background-color: #1b1528;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.sidebar h2 {
+  color: white;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 30px;
+}
+
+.sidebar ul li a {
+  display: block;
+  padding: 10px;
+  color: #cfc9e6;
+  text-decoration: none;
+  margin-bottom: 8px;
+  border-radius: 6px;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+  background-color: #27203a;
+  color: white;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 30px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background-color: #1b1528;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.img-placeholder {
+  background-color: #2e2842;
+  color: #aaa;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  border-radius: 6px;
+}
+
+.btn {
+  background-color: #8d6fe7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.tasks-header,
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.empty-msg {
+  margin-top: 30px;
+  color: #9e92cc;
+}
+
+.task-card {
+  background-color: #1f1b2e;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  border: 1px solid #3c325e;
+}
+
+.task-card-content {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+.task-left-sec {
+  display: flex;
+  flex: 0.5;
+  flex-direction: row;
+  align-items: center;
+}
+
+.task-left-sec > div:nth-child(2) {
+  margin-left: 40px;
+}
+
+.task-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.task-desc {
+  font-size: 0.95rem;
+  color: #bdbdbd;
+}
+
+.due-date {
+  background-color: #3c325e;
+  padding: 4px 10px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: #f2f2f2;
+}
+
+.task-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: #ff6b6b;
+}
+
+.task-done {
+  transform: scale(1.3);
+  accent-color: #8e44ad;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 18, 30, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: #1e1a2f;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  color: #ccc;
+  position: relative;
+  align-items: center;
+}
+
+.modal-content h2 {
+  margin-bottom: 10px;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #3a3452;
+  background-color: #2a253c;
+  color: #eee;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.modal-content textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.modal-content .btn.full {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+/* JOURNAL */
+
+textarea {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #1b1528;
+  color: #cfc9e6;
+  border: 1px solid #2e2842;
+  resize: none;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+.journal-card {
+  background-color: #1e1a2f;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.journal-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  color: #bcb7d1;
+}
+
+.journal-body {
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+}
+
+.journal-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #ff6666;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* GOALS SECTION */
+.goals-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.goal-card {
+  background-color: #1e1a2f;
+  border: 1px solid #2c2345;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 300px;
+  color: #dcd4ff;
+  position: relative;
+  box-shadow: 0 0 0 1px #2e2548;
+}
+
+.goal-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  text-transform: capitalize;
+}
+
+.goal-card small {
+  background: #6e57e0;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 8px;
+  float: right;
+}
+
+.goal-card p {
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
+}
+
+.goal-card .deadline {
+  color: #bdb2ff;
+  font-size: 0.8rem;
+}
+
+.goal-card .progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.goal-card input[type="range"] {
+  width: 100%;
+  accent-color: #a080ff;
+}
+
+.goal-card .actions {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.goal-card .actions i {
+  cursor: pointer;
+  color: #ccc;
+}
+
+.goal-card .actions .edit {
+  color: #a6a1e4;
+}
+
+.goal-card .actions .delete {
+  color: #ff5b5b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  body {
+    flex-direction: column;
+  }
+
+  .main-content {
+    padding: 15px;
+  }
+}

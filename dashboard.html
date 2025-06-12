@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ReflectFlow</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>ReflectFlow</h2>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="goals.html">Goals</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="#">Productivity</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+    </div>
+
+    <div class="main-content">
+      <h1>Welcome to ReflectFlow</h1>
+      <p>Your personal command center for productivity and mindfulness.</p>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Task Manager</h3>
+          <div id="recent-tasks" class="recent-tasks-list">
+            <p>Loading recent tasks...</p>
+          </div>
+          <p>Organize your day with a powerful task manager.</p>
+          <a href="tasks.html" class="btn">Go to Tasks</a>
+        </div>
+        <div class="card">
+          <h3>Goal Setter</h3>
+          <div class="img-placeholder">600 × 400</div>
+          <p>Set meaningful goals and track progress.</p>
+          <button class="btn">Set Goals</button>
+        </div>
+        <div class="card">
+          <h3>Digital Journal</h3>
+          <div id="recent-journal" class="recent-journal-list">
+            <p>Loading recent journals...</p>
+          </div>
+          <p>Write your Thoughts.</p>
+          <button href="journal.html" class="btn">Write Journal</button>
+        </div>
+        <div class="card">
+          <h3>Productivity Monitor</h3>
+          <div class="img-placeholder">600 × 400</div>
+          <p>Visualize achievements and patterns.</p>
+          <button class="btn">View Stats</button>
+        </div>
+      </div>
+    </div>
+
+     <div class="top-bar">
+    <button id="logoutBtn" class="logout-btn">Logout</button>
+  </div>
+
+    <script type="module" src="./js/dashboard.js"></script>
+  </body>
+</html>

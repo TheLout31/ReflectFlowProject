@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tasks - ReflectFlow</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>ReflectFlow</h2>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a class="active" href="tasks.html">Tasks</a></li>
+        <li><a href="#">Goals</a></li>
+        <li><a href="#">Journal</a></li>
+        <li><a href="#">Productivity</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+    </div>
+    <div class="main-content">
+      <div class="tasks-header">
+        <h1>Task Manager</h1>
+        <button id="openTaskModal"  class="btn add-task-btn">Add New Task</button>
+      </div>
+      <div id="tasks-list" ></div>
+      <!-- <p class="empty-msg">No tasks yet. Add a new task to get started!</p> -->
+    </div>
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-btn" id="closeTaskModal">&times;</span>
+        <h2>Add New Task</h2>
+        <p>Fill in the details for your new task.</p>
+
+        <label for="taskTitle">Title</label>
+        <input
+          type="text"
+          id="taskTitle"
+          placeholder="e.g., Finish project proposal"
+        />
+
+        <label for="taskDescription">Description (Optional)</label>
+        <textarea
+          id="taskDescription"
+          placeholder="Add more details about the task..."
+        ></textarea>
+
+        <label for="taskDueDate">Due Date (Optional)</label>
+        <input type="date" id="taskDueDate" />
+
+        <button class="btn full" id="addTaskButton">➕ Add Task</button>
+      </div>
+    </div>
+
+    <script type="module" src="js/tasks.js"></script>
+  </body>
+</html>
