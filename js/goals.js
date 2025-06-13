@@ -90,9 +90,10 @@ async function showGoals() {
       <p>${goal.description}</p>
       <p class="deadline">Deadline: ${due}</p>
       <div class="progress-label">
-        <span>Progress</span><span id="progressValue-${goalId}">5%</span>
+        <span>Progress</span>
+        <span id="progressValue-${goalId}">${goal.progress || 5}%</span>
       </div>
-      <input type="range" min="0" max="100" value="5" oninput="updateProgressValue('${goalId}', this.value)" />
+      <input class="progress-range" type="range" min="0" max="100" value="${goal.progress || 0}" oninput="updateProgressValue('${goalId}',this.value)" />
       <div class="actions">
        <button class="edit-goal" data-id="${goalId}">✏️</button>
             <button class="delete-goal" data-id="${goalId}">🗑️</button>
@@ -101,10 +102,6 @@ async function showGoals() {
 
       goalsContainer.appendChild(card);
     });
-
-        function updateProgressValue(id, val) {
-      document.getElementById(`progressValue-${id}`).textContent = `${val}%`;
-    }
 
     document.querySelectorAll(".delete-goal").forEach((btn) => {
       btn.addEventListener("click", async (e) => {
@@ -122,6 +119,33 @@ async function showGoals() {
   } catch (e) {
     showToast("Error showing Data!", "#8f5c5c");
   }
+}
+
+const progressDebounceMap = {};
+
+window.updateProgressValue = function (goalId, value) {
+  const progressSpan = document.getElementById(`progressValue-${goalId}`);
+  if (progressSpan) {
+    progressSpan.textContent = `${value}%`;
+  }
+
+  // Debounce Firestore update
+  if (progressDebounceMap[goalId]) {
+    clearTimeout(progressDebounceMap[goalId]);
+  }
+
+  progressDebounceMap[goalId] = setTimeout(async () => {
+    const uid = localStorage.getItem("uid");
+    if (uid) {
+      const goalRef = doc(db, "users", uid, "goals", goalId);
+      console.log("Progress Updated for:", goalId);
+      try {
+        await updateDoc(goalRef, { progress: Number(value) });
+      } catch (error) {
+        console.error("Error updating progress:", error);
+      }
+    }
+  }, 1000); 
 }
 
 function showToast(message, color) {

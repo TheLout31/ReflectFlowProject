@@ -68,7 +68,7 @@ async function loadRecentJournals() {
 
   try {
     const taskRef = collection(db, "users", uid, "journals");
-    const q = query(taskRef, orderBy("createdAt", "desc"), limit(5)); // latest 5
+    const q = query(taskRef, orderBy("createdAt", "desc"), limit(5)); 
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
@@ -94,5 +94,43 @@ async function loadRecentJournals() {
   }
 }
 
+async function loadRecentGoals() {
+  const container = document.getElementById("recent-goals");
+  if (!uid) {
+    container.innerHTML = "<p>Please log in to see your Goals.</p>";
+    return;
+  }
+
+  try {
+    const taskRef = collection(db, "users", uid, "goals");
+    const q = query(taskRef, orderBy("createdAt", "desc"), limit(5)); 
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      container.innerHTML = "<p>No Goals available.</p>";
+      return;
+    }
+
+    container.innerHTML = ""; 
+
+    querySnapshot.forEach((docSnap) => {
+      const goal = docSnap.data();
+      const div = document.createElement("div");
+      div.className = "goal-preview";
+
+      div.innerHTML = `
+        <span>${goal.title}</span>
+        <span class="goal-status">
+          ${goal.progress}%
+        </span>
+      `;
+      container.appendChild(div);
+    });
+  } catch (error) {
+    container.innerHTML = "<p>Error loading tasks.</p>";
+    console.error("Error:", error);
+  }
+}
+loadRecentGoals()
 loadRecentJournals();
 loadRecentTasks();
