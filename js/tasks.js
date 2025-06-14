@@ -43,8 +43,10 @@ document.getElementById("addTaskButton").addEventListener("click", async () => {
       dueDate: dueDate,
       createdAt: createdAt,
     });
+    showToast("Task Added!!",  "#4caf50");
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
+    showToast(e.message,  "#FF4433");
     console.error("Error adding document: ", e);
   }
   // const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
@@ -114,6 +116,7 @@ async function showTasks() {
       btn.addEventListener("click", async (e) => {
         const id = e.target.getAttribute("data-id");
         await deleteDoc(doc(db, "users", uid, "tasks", id));
+        showToast("Task Deleted!!",  "#4caf50");
         console.log("Task deleted:", id);
         showTasks(); // Re-render after deletion
       });
@@ -122,6 +125,22 @@ async function showTasks() {
   } catch (error) {
     console.error("Error loading tasks:", error);
   }
+}
+
+function showToast(message, color) {
+  const toast = document.createElement("div");
+  toast.textContent = message;
+  toast.style.position = "fixed";
+  toast.style.bottom = "20px";
+  toast.style.right = "20px";
+  toast.style.backgroundColor = color;
+  toast.style.color = "#fff";
+  toast.style.padding = "10px 16px";
+  toast.style.borderRadius = "8px";
+  toast.style.zIndex = 1000;
+
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
 }
 
 showTasks();

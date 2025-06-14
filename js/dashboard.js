@@ -15,9 +15,10 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
   try {
     await signOut(auth);
     localStorage.removeItem("uid");
+    showToast("SignOut Successfull!!",  "#4caf50");
     window.location.href = "index.html";
   } catch (error) {
-    alert("Logout failed: " + error.message);
+    showToast(error.message,  "#FF4433");
   }
 });
 
@@ -130,6 +131,22 @@ async function loadRecentGoals() {
     container.innerHTML = "<p>Error loading tasks.</p>";
     console.error("Error:", error);
   }
+}
+
+function showToast(message, color) {
+  const toast = document.createElement("div");
+  toast.textContent = message;
+  toast.style.position = "fixed";
+  toast.style.bottom = "20px";
+  toast.style.right = "20px";
+  toast.style.backgroundColor = color;
+  toast.style.color = "#fff";
+  toast.style.padding = "10px 16px";
+  toast.style.borderRadius = "8px";
+  toast.style.zIndex = 1000;
+
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
 }
 loadRecentGoals()
 loadRecentJournals();

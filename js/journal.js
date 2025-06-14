@@ -53,7 +53,8 @@ async function loadEntries() {
     btn.addEventListener("click", async (e) => {
       const idx = e.target.getAttribute("data-id");
       await deleteDoc(doc(db, "users", uid, "journals", idx));
-      console.log("Task deleted:", idx)
+      showToast("Journal Deleted!!", "#4caf50");
+
       loadEntries();
     });
   });
@@ -70,13 +71,31 @@ saveJournal.addEventListener("click", async () => {
       text: text,
       createdAt: createdAt,
     });
+    showToast("Journal Added!!", "#4caf50");
     console.log("Document written with ID: ", docRef.id);
     loadEntries();
   } catch (e) {
+    showToast(e.message,  "#FF4433");
     console.error("Error adding document: ", e);
   }
 
   journalInput.value = "";
 });
+
+function showToast(message, color) {
+  const toast = document.createElement("div");
+  toast.textContent = message;
+  toast.style.position = "fixed";
+  toast.style.bottom = "20px";
+  toast.style.right = "20px";
+  toast.style.backgroundColor = color;
+  toast.style.color = "#fff";
+  toast.style.padding = "10px 16px";
+  toast.style.borderRadius = "8px";
+  toast.style.zIndex = 1000;
+
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
 
 loadEntries();

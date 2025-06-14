@@ -10,10 +10,9 @@ const toggleLink = document.getElementById("toggleLink");
 const formTitle = document.getElementById("formTitle");
 
 let loggedIn = localStorage.getItem("uid");
-console.log(loggedIn)
+console.log(loggedIn);
 if (loggedIn) {
   window.location.href = "dashboard.html";
-  
 }
 
 toggleLink.addEventListener("click", (e) => {
@@ -46,7 +45,7 @@ signupForm.addEventListener("submit", async function (e) {
     );
     const user = userCredential.user;
 
-    alert("Signup successful! User ID: " + user.uid);
+     showToast("SignIn Successfull!!",  "#4caf50");
 
     signupForm.style.display = "none";
     loginForm.style.display = "block";
@@ -54,7 +53,7 @@ signupForm.addEventListener("submit", async function (e) {
     toggleLink.textContent = "Sign up";
     toggleLink.parentElement.firstChild.textContent = "Don't have an account? ";
   } catch (error) {
-    alert("Error: " + error.message);
+    showToast(error.message, "#FF4433");
     console.error(error);
   }
 });
@@ -76,10 +75,26 @@ loginForm.addEventListener("submit", async function (e) {
     );
     const user = userCredential.user;
     localStorage.setItem("uid", JSON.stringify(user.uid));
-    alert("Login successful!!");
+    showToast("LogIn Successfull!!",  "#4caf50");
     window.location.href = "dashboard.html";
   } catch (error) {
-    alert("Error: " + error.message);
+    showToast("Incorrect Email or Password", "#FF4433");
     console.error(error);
   }
 });
+
+function showToast(message, color) {
+  const toast = document.createElement("div");
+  toast.textContent = message;
+  toast.style.position = "fixed";
+  toast.style.bottom = "20px";
+  toast.style.right = "20px";
+  toast.style.backgroundColor = color;
+  toast.style.color = "#fff";
+  toast.style.padding = "10px 16px";
+  toast.style.borderRadius = "8px";
+  toast.style.zIndex = 1000;
+
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
