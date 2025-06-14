@@ -5,7 +5,7 @@ import {
   doc,
   updateDoc,
   deleteDoc,
-  addDoc
+  addDoc,
 } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-firestore.js";
 
 document.getElementById("openTaskModal").addEventListener("click", () => {
@@ -43,10 +43,10 @@ document.getElementById("addTaskButton").addEventListener("click", async () => {
       dueDate: dueDate,
       createdAt: createdAt,
     });
-    showToast("Task Added!!",  "#4caf50");
+    showToast("Task Added!!", "#4caf50");
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
-    showToast(e.message,  "#FF4433");
+    showToast(e.message, "#FF4433");
     console.error("Error adding document: ", e);
   }
   // const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
@@ -77,17 +77,23 @@ async function showTasks() {
 
       const card = document.createElement("div");
       card.className = "task-card";
+      card.setAttribute("draggable", "true");
+      card.setAttribute("data-id", taskId);
 
       card.innerHTML = `
         <div class="task-card-content">
           <div class="task-left-sec">
             <div>
-              <input type="checkbox" class="task-done" data-id="${taskId}" ${task.done ? 'checked' : ''} />
+              <input type="checkbox" class="task-done" data-id="${taskId}" ${
+        task.done ? "checked" : ""
+      } />
             </div>
             <div>
               <h3 class="task-title">${task.title}</h3>
               <p class="task-desc">${task.description}</p>
-              <span class="due-date">Due: ${new Date(task.dueDate).toDateString()}</span>
+              <span class="due-date">Due: ${new Date(
+                task.dueDate
+              ).toDateString()}</span>
             </div>
           </div>
           <div class="task-actions">
@@ -98,6 +104,32 @@ async function showTasks() {
       `;
 
       TaskList.appendChild(card);
+      card.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("text/plain", taskId);
+        e.target.style.opacity = 0.5;
+      });
+
+      card.addEventListener("dragend", (e) => {
+        e.target.style.opacity = 1;
+      });
+
+      card.addEventListener("dragstart", () => card.classList.add("dragging"));
+      card.addEventListener("dragend", () => card.classList.remove("dragging"));
+    });
+
+    TaskList.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      const afterElement = getDragAfterElement(TaskList, e.clientY);
+      const draggedId = e.dataTransfer.getData("text/plain");
+      const draggedEl = document.querySelector(
+        `.task-card[data-id="${draggedId}"]`
+      );
+
+      if (afterElement == null) {
+        TaskList.appendChild(draggedEl);
+      } else {
+        TaskList.insertBefore(draggedEl, afterElement);
+      }
     });
 
     // 🔄 Handle task done toggle
@@ -116,15 +148,34 @@ async function showTasks() {
       btn.addEventListener("click", async (e) => {
         const id = e.target.getAttribute("data-id");
         await deleteDoc(doc(db, "users", uid, "tasks", id));
-        showToast("Task Deleted!!",  "#4caf50");
+        showToast("Task Deleted!!", "#4caf50");
         console.log("Task deleted:", id);
         showTasks(); // Re-render after deletion
       });
     });
-
   } catch (error) {
     console.error("Error loading tasks:", error);
   }
+}
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [
+    ...container.querySelectorAll(".task-card:not(.dragging)"),
+  ];
+
+  return draggableElements.reduce(
+    (closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+
+      if (offset < 0 && offset > closest.offset) {
+        return { offset: offset, element: child };
+      } else {
+        return closest;
+      }
+    },
+    { offset: Number.NEGATIVE_INFINITY }
+  ).element;
 }
 
 function showToast(message, color) {
